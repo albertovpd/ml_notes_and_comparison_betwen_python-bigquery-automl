@@ -161,7 +161,9 @@ We can see the relationship is noisy with no visible trend, so the number of bic
 
 I'm trying to query from Google Colab and use a proper correlation matrix to evaluate together all features we saw before, but it's taking goddamn time
 
-### Correlation Matrix in Google Colab
+### Correlation Matrix in Google Colab 
+
+(if you're working with 1GB it can take a lot)
 
         from google.colab import auth
         auth.authenticate_user()
@@ -196,6 +198,23 @@ To query whatever you're querying:
         start_date,
         start_station_name
 
+        df
+
+        %matplotlib inline
+        # https://github.com/albertovpd/datamad1019/blob/lab-supervised-learning/module-3/lab-supervised-learning/your-code/main.ipynb
+
+        import numpy as np
+        import pandas as pd
+        import matplotlib.pyplot as plt
+        import seaborn as sns
+
+        corre = df.corr()
+        sns.heatmap(corre)
+
+![alt](./pics/correlation_matrix.png "")
+
+- Well, this result is dumb, but helpful when working with great amount of labels. Remember to erase columns with strong correlation as first approach (but try everything before deleting them)
+
 -------------------------------------------------------------
 
 # Creating a Training Dataset
@@ -215,9 +234,183 @@ After taking a glance to the daset, we can prepare the training dataset by pulli
 
 If preparing the data involves computationally expensive transformations or joins, it might be a good idea to save the prepared training data as a table so as to not repeat that work during experimentation. 
 
+# Training and evaluating the model 
 
-![alt](./pics/.png "")
-![alt](./pics/.png "")
+- This can be PURE SHIT. If the dataset you're working with is stored in EEUU and you're in other part, you won't be able to do shit. So you need to create a project and copy the dataset or tables to your project (and copying costs the same than querying).
+- Finally, it's quite a fuss the way if naming the project. What I did:
+
+        - create an empty dataset called vargas_data_studies in isentropic-road...
+        - copy the tables I was working with the London bikes dataset
+
+        CREATE OR REPLACE MODEL `isentropic-road-260315.vargas_data_studies.regression_london_bicycles`
+
+        OPTIONS(input_label_cols=["duration"], model_type="linear_reg")
+        as
+
+        SELECT
+        duration,
+        start_station_name,
+        CAST(EXTRACT(dayofweek FROM start_date) AS STRING ) as dayofweek,
+        CAST(EXTRACT(hour FROM start_date) AS STRING ) as hourofday
+
+        FROM `isentropic-road-260315.vargas_data_studies.london_bicycles_cycle_hire` 
+
+- The label is numeric, so this is a regression problem. 
+
+- The SELECT statement above prepares the training dataset and pulls in the label and feature columns.
+
+# Evaluating the model
+
+- In the created table, we can check "Training", "Evaluation", they contains useful information. In this particular case the coefficient of determination is R²=0.0036, which is kind of absolutely
+ terrible.
+
+ You can also check the evaluations with a query
+
+        SELECT * FROM ML.EVALUATE(MODEL `isentropic-road-260315.vargas_data_studies.regression_london_bicycles`)
+
+![alt](./pics/terrible.png "")
+Mean absolute error is in seconds. Check out the dimension of other metrics
+
+- Note that the query options also identifies the model type. Here, we have picked the simplest regression model that BigQuery supports. We strongly encourage you to pick the simplest model and to spend a lot of time considering and bringing in alternate data choices, because the payoff of a new/improved input feature greatly outweighs the payoff of a better model.
+#### Only when you've reached the limits of your data experimentation should you try more complex models. (In the end, try stuff, multiply stuff, check features).
+
+### Combining days of the week
+
+There are other ways that you could have chosen to represent the features that you have. For example, recall that when we exported the relationship between dayofweek and the duration of rentals, we found that durations were longer on weekends than on weekdays. Therefore, instead of treating the raw value of dayofweek as a feature, you can employ this insight by fusing several dayofweek values into  the weekday category
+
+        CREATE OR REPLACE MODEL
+        `isentropic-road-260315.vargas_data_studies.regression_london_bicycles_weekday` OPTIONS(input_label_cols=["duration"],
+            model_type="linear_reg") AS
+        SELECT
+        duration,
+        start_station_name,
+        IF
+        (EXTRACT(dayofweek
+            FROM
+            start_date) BETWEEN 2
+            AND 6,
+            "weekday",
+            "weekend") AS dayofweek,
+            -- Esto es como el if/else
+        CAST(EXTRACT(hour
+            FROM
+            start_date) AS STRING ) AS hourofday
+        FROM
+        `isentropic-road-260315.vargas_data_studies.london_bicycles_cycle_hire`
+
+- This model has a mean abolute error of 966.8886, which is less than the model we did before (1,025.5926), nevertheless R² is even more terrible. I'm starting to doubt about the R squared being R²...It makes no sense (the book says it is an improvement)
+
+- So let's keep on, because the Mean Absolute Error decreased and also all the other metrics
+
+### Bucketizing thehour of day
+
+Based on the realationship between hourofday and the duration, you can experiment with bucketizing the variable into 4 bins (-inf,5), [5,10),[10,17),[17,inf):
+
+        CREATE OR REPLACE MODEL
+        `isentropic-road-260315.vargas_data_studies.regression_london_bicycles_bucketized` OPTIONS(input_label_cols=["duration"],
+            model_type="linear_reg") AS
+        SELECT
+        duration,
+        start_station_name,
+        IF
+        (EXTRACT(dayofweek
+            FROM
+            start_date) BETWEEN 2
+            AND 6,
+            "weekday",
+            "weekend") AS dayofweek,
+        -- Esto es como el if/else
+        -- Abajo: quizás bucketize te convierte las cosas directamente en int, checkea eso
+        ML.BUCKETIZE(EXTRACT(hour
+            FROM
+            start_date),
+            [5,
+            10,
+            17]) AS hourofday
+        FROM
+        `isentropic-road-260315.vargas_data_studies.london_bicycles_cycle_hire`
+
+With this the mean absolute error decreased. So let's keep it.
+
+# Predicting with the model
+
+We can try out the prediction by passing in a set of rows for which to predict. Nevertheless, you can't obtain the predicted duration of a rental in Hyde Park at 5pm on a Tuesday using this code, because you grouped by weekday/weekend dude. Be careful. 
+Anyway, you can saltar-a-la-torera-este-jaleo using TRANSFORM
+
+        CREATE OR REPLACE MODEL
+        `isentropic-road-260315.vargas_data_studies.regression_london_bicycles_bucketized_except` transform(* EXCEPT(start_date),
+        IF
+            (EXTRACT(dayofweek
+            FROM
+                start_date) BETWEEN 2
+            AND 6,
+            "weekday",
+            "weekend") AS dayofweek,
+            ML.BUCKETIZE(EXTRACT(HOUR
+            FROM
+                start_date),
+            [5,
+            10,
+            17]) AS hourofday) OPTIONS (input_label_cols=["duration"],
+            model_type="linear_reg") AS
+        SELECT
+        duration,
+        start_station_name,
+        start_date
+        FROM
+        `isentropic-road-260315.vargas_data_studies.london_bicycles_cycle_hire`
+
+- Use the TRANSFORM clause and formulate the ML problem in such a way that anyone requiring prediction needs to provide just the raw data.
+
+- The advantage of placing all preprocessing functions inside the TRANSFORM clause is that clients of the model do not need to know what kind of preprocessing has been carried out. Best practice, therefore, is to have the SELECT statement in a training query return just the raw data, and have all transformations done in the TRANSFORM clause.
+
+## With the TRANSFORM clause, the prediction query becomes:
+
+        SELECT
+        *
+        FROM
+        ML.PREDICT(MODEL `isentropic-road-260315.vargas_data_studies.regression_london_bicycles_bucketized_except`,
+            (
+            SELECT
+            "Park Lane, Hyde Park" AS start_station_name,
+            CURRENT_TIMESTAMP() AS start_date))
+
+    - And you'll have a prediction. a terrible one
+
+## Generating batch predictions
+
+You can also create a table of predictions for every hour at every station, starting at 3 a.m. the next day, using array generation:
+
+        DECLARE tomorrow_3am TIMESTAMP;
+        SET tomorrow_3am = TIMESTAMP_ADD(TIMESTAMP(DATE_ADD(CURRENT_DATE(), INTERVAL 1 DAY)),
+        INTERVAL 3 HOUR);
+
+        WITH generated AS (
+        SELECT 
+        name AS start_station_name,
+        GENERATE_TIMESTAMP_ARRAY (
+        tomorrow_3am,
+        TIMESTAMP_ADD(tomorrow_3am, INTERVAL 24 HOUR),
+        INTERVAL 1 HOUR) AS dates
+
+
+
+        FROM `isentropic-road-260315.vargas_data_studies.london_bicycles_cycle_stations` ),
+
+        features AS (
+        SELECT
+        start_station_name,
+        start_date
+
+        FROM
+
+        generated,
+        UNNEST(dates) AS start_date)
+
+        SELECT * FROM ML.PREDICT(MODEL `vargas_data_studies.regression_london_bicycles_bucketized_except`, (SELECT * FROM features))
+
+So we did everything just queryng stuff.
+
 ![alt](./pics/.png "")
 ![alt](./pics/.png "")
 ![alt](./pics/.png "")
