@@ -1,6 +1,12 @@
 
 # Building a Regression model
 
+Let's remember what we can do
+
+![alt](./pics/tablecontent.png "")
+
+------------------------------
+
 let's use the london_bicycles dataset
 
 let's assume we have 2 types of bicycles: hardy commuter bikes and fast but fagile road bikes. if a bicycle rental is likely to be for a long duration, we need to have road bikes in stock, but if the rental is likely to be for a short duration, we need to have commuter bikes in stock. Therefore, to build a system to properly stock bicycles, we need to predict the duration of bicycle rentals.
