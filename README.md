@@ -1,6 +1,6 @@
 # ml_with_bigquery_personal_notes
 
-My studies and stuff about how to use BigQuery for ML
+My studies and stuff about how to use BigQuery for ML. Don't panic! Currently in process.
 
 # 1st things 1st. Basics.
 
