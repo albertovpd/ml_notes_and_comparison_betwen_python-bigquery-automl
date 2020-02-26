@@ -29,30 +29,8 @@ My studies and stuff about how to use BigQuery for ML. Don't panic! Currently in
 
     ------------------------------------------
 
-## Problem charasteristic                           ML problem type     BigQuery model_type
-
-labels unavaliable and data cannot be labeled       clustering          kmeans
-
-label is a number                                   regression          linear_reg
-                                                                        dnn_regressor
-                                                                        boosted_tree_regressor
-
-recommend products to users                         recommender         matrix_factorization
-recommend users
-
-label is 1/0, true/false or any binary              binary classif      logistic_reg
-                                                                        dnn_classifier
-                                                                        boosted_tree_classifier
-
-input feature is unstructured                       image classific     ouse output of Clod Vision API or Cloud Natura  
-                                                    text classific      natural language PI or any BQ model
-                                                    sentiment analysis
-                                                    entity extraction
-
-label is unstructured                               question answering  use cloud autoML products
-                                                    text summarization
-                                                    image captioning
-
+    ![alt](./pics/tablecontent.png "")
+    
 -------------------------------
 
 # Building a Regression model
@@ -411,7 +389,7 @@ You can also create a table of predictions for every hour at every station, star
 
 So we did everything just queryng stuff.
 
-![alt](./pics/.png "")
+
 ![alt](./pics/.png "")
 ![alt](./pics/.png "")
 ![alt](./pics/.png "")
