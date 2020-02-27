@@ -1,6 +1,31 @@
 # ml_with_bigquery_personal_notes
 
-My studies and stuff about how to use BigQuery for ML. Don't panic! Currently in process.
+This is a sketch of a private company research on what technology could be better to use. Don't panic! Currently in process.
+
+
+
+### Evaluating between Python Machine Learning, BigQuery Machine Learning and Google AutoML Machine Learning
+
+- Python
+
+![alt](./pics/python.png "")
+
+- BigQuery
+
+![alt](./pics/ml_bigquery.png "")
+
+![alt](./pics/automl.png "")
+
+
+- Esto está verde. Es un ejemplo
+
+- We need MORE metrics, ROC, AUC ect of ALL systems before being confident with them (RMSE it's just a measure of many), and draw all of them
+
+- We need a deeper cleaning of data before using it (I can clean all perfectly in Python and save it like a new dataset in BigQuery. In that way I'm sure Bigquery ML and AutoML will improve exponentially)
+
+- In the end everything must be imported to google data studio, to have beautiful pony dashboards
+
+-----------------------------------------------------
 
 # 1st things 1st. Basics.
 
@@ -32,3 +57,4 @@ My studies and stuff about how to use BigQuery for ML. Don't panic! Currently in
     ![alt](./pics/tablecontent.png "")
 
 -------------------------------
+
