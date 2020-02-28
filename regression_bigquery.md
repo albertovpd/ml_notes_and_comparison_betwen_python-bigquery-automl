@@ -1,6 +1,8 @@
 
 # Building a Regression model
 
+https://cloud.google.com/bigquery-ml/docs
+
 Let's remember what we can do
 
 ![alt](./pics/tablecontent.png "")
@@ -164,6 +166,8 @@ To query whatever you're querying:
 ![alt](./pics/correlation_matrix.png "")
 
 - Well, this result is dumb, but helpful when working with great amount of labels. Remember to erase columns with strong correlation as first approach (but try everything before deleting them)
+
+## (This is already donde in other repo, better done, or just done like it should be)
 
 -------------------------------------------------------------
 
@@ -361,8 +365,71 @@ You can also create a table of predictions for every hour at every station, star
 
 So we did everything just queryng stuff.
 
+## Examining model weights 
 
-![alt](./pics/.png "")
+A linear regression model... It's fucking linear. Not cuadratic, not cubic. It's a sum or subtract of features. To examine the given weights to each column:
+
+        SELECT
+        *
+        FROM
+        ML.WEIGHTS(MODEL `isentropic-road-260315.vargas_data_studies.regression_london_bicycles_bucketized_except`)
+
+
+![alt](./pics/weightseconds.png "")
+
+This means that the contribution to this feature to the overal predicted duration is 3.07 seconds.
+
+The weights of different input features are not very meaningful - pretty much the only reason you might need to examine the weights in this manner is if you want to carry out predictions outside of BigQuery.
+
+- Stuff out-of-needs right now: 
+
+    You can program the weights of linear regression in python and insert it in the BigQuery model (Examining model weights, Machine Learning in BigQuery)
+
+## More complex regression models 
+
+A linear regression model is the simplest form of regression model. BigQuery supports dnn_regressor and xgboost models 
+
+- Deep Neural Networks
+
+https://cloud.google.com/bigquery-ml/docs/reference/standard-sql/bigqueryml-syntax-create-tensorflow
+
+https://cloud.google.com/bigquery-ml/docs
+
+DNN can be thought of an extension of linear models. The 1st layer is a linear transform and the 2nd one in nonlinear, so cool.
+
+I really think this way is deprecated. Now you can use Tensorflow as model. Need to researh this jaleo
+
+
+## Gradient bossting trees
+
+- Decision trees are awesome. Period. They by themselves are quite shitty, but it can be improved with a boosting technique
+
+        CREATE OR REPLACE MODEL
+        `isentropic-road-260315.vargas_data_studies.xgboost_london_bicycles` TRANSFORM (* EXCEPT(start_date),
+        IF
+            (EXTRACT(dayofweek
+            FROM
+                start_date) BETWEEN 2
+            AND 6,
+            'weekday',
+            'weekend') AS dayofweek,
+            ML.BUCKETIZE(EXTRACT(HOUR
+            FROM
+                start_date),
+            [5,
+            10,
+            17]) AS hourofday) OPTIONS (input_label_cols=['duration'],
+            model_type='boosted_tree_regressor',
+            max_tree_depth=4) AS
+        SELECT
+        duration,
+        start_station_name,
+        start_date
+        FROM
+        `isentropic-road-260315.vargas_data_studies.london_bicycles_cycle_hire`
+
+
+
 ![alt](./pics/.png "")
 ![alt](./pics/.png "")
 ![alt](./pics/.png "")
