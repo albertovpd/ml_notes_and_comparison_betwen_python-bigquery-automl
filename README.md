@@ -48,11 +48,13 @@ I'll update the process after anonymizing the studies. In the meantime, whith th
 
 ![alt](./pics/python.png "")
 
-Get the best metrics, in part because is the most carefully. In BigQuery the cleaning process can be quite a mess, and AutoML environment looks like an Excel. Maybe the key is to clean perfectly the dataset with Python and export to AutoML, once is clean.
+Get the best metrics, in part because is the most carefully. In BigQuery the cleaning process can be quite a mess, and AutoML environment looks like an Excel. Maybe the key is to clean perfectly the dataset with Python and export to AutoML, once is clean. Furthermore, outliers are removed.
 
 - BigQuery
 
 ![alt](./pics/ml_bigquery.png "")
+
+I need to get detailed information about the BigQuery metrics results. 
 
 - AutoML
 
