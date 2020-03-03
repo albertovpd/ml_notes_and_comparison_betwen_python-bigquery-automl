@@ -1,5 +1,6 @@
-# ML with Bigquery
+# ML regression with Bigquery
 
+- As an example of regression, I'll predict a column called conversion rate. I didn't pay too much attention to if that was a good stuff to predict, or if the columns I used will be useful to work in real work with this model. The motivation is purely to check how it works.
 
 I already discarded the columns through Python, but we could do something like the following
 
@@ -83,18 +84,18 @@ With this we have all metrics. For some reason what google people wants is to mi
 
 ## Results
 
-![alt](./pics/bq-predictions-regression.png "")
+![alt](../pics/bq-predictions-regression.png "")
 
-- Hemos recogido datos de 2 meses, enero y febrero
+- We've collected data from must 2 months, wich it's not good
 
-- 1. Agrupando por día del mes:
-    A partir de 0.25 de conversion rate se empiezan a diferenciar los resultados, Realmente no tiene mucho sentido agrupar por día del mes
-- 2. Agrupando por horas del día
+1. Grouping by month:
+    From 0.25 conversion rate the results start to be different from the desired ones. It really makes no sense to group in this way, unless you have years and years of collected data.
 
-- 3. Agrupando por día de la semana se ve que el miércoles la predicción difiere más que el resto de días, miércoles-jueves
+2. Grouping by hours of day
 
-- 4. Agrupando por mes obtenemos una predicción muy muy buena
+3. Grouping by day of the week. It looks like on wednesday predictions are different from the rest of days (wednesday-thursady).
 
+4. Grouping by month we'll have an awesome prediction. The possible cause could be like locally the predictions are not good, but globally they perform good in the end.
 
 https://datastudio.google.com/u/0/reporting/1awkU_GPtZBy13oRX21c2fIo1NOigrJ9j/page/pgZGB/edit
 
