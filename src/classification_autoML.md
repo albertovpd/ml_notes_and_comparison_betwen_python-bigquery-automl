@@ -4,12 +4,12 @@
 - copy the dataset you want to work to a personal place
 
 - go here 
-        https://console.cloud.google.com/automl-tables/datasets?_ga=2.209126802.1840264490.1582536652-152910185.1580744498&_gac=1.245514928.1580979926.EAIaIQobChMI-cf7k8m85wIVxpTVCh1bHAuMEAAYASAAEgKDw_D_BwE&project=isentropic-road-260315
+        https://console.cloud.google.com/automl-tables/datasets
 
 - import data from BigQuery (fill the gaps)
 
     - isentropic-road-260315
-    - vargas_data_studies_US (because country stuff)
+    - foldername (because country stuff)
     - census
 
 Once the data is imported
