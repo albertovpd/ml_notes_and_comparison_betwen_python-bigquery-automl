@@ -38,9 +38,9 @@ How to use BigQuery for ML and compare results with other tools. Currently in pr
 
 -------------------------------
 
+# Regression
 
-
-# Evaluating regression between Python Machine Learning, BigQuery Machine Learning and Google AutoML Machine Learning
+    Evaluating regression between Python Machine Learning, BigQuery Machine Learning and Google AutoML Machine Learning
 
 I'll update the process after anonymizing the studies. In the meantime, whith the same dataset, those are the results:
 
@@ -68,3 +68,11 @@ I need to get detailed information about the BigQuery metrics results.
 - In the end everything must be imported to google data studio, to have beautiful pony dashboards
 
 -----------------------------------------------------
+
+# Classification
+
+Using the `bigquery-public-data.ml_datasets.census_adult_income`
+
+- BigQuery
+
+![alt](../pics/predictionclass.png " ")

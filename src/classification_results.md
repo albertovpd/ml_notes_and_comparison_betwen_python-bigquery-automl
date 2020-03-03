@@ -3,11 +3,11 @@
 - BigQuery
 
 
-![alt](./pics/evaluate.png " ")
+![alt](../pics/evaluate.png " ")
 
 - AutoML
 
-![alt](./pics/classification_metris.png " ")
+![alt](../pics/classification_metris.png " ")
 
 - Python
 

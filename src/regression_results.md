@@ -25,31 +25,31 @@
 
 - Python
 
-![alt](./pics/python.png "")
+![alt](../pics/python.png "")
 
 - BigQuery
 
-![alt](./pics/ml_bigquery.png "")
+![alt](../pics/ml_bigquery.png "")
 
-![alt](./pics/conversionprediction.png "")
+![alt](../pics/conversionprediction.png "")
 
-![alt](./pics/bq-predictions-regression.png "")
+![alt](../pics/bq-predictions-regression.png "")
 From here we can say groping by month we can have great results in average. That's the key of this picture. It is not that good in short-term (and of course we need an increasing volume of data)
 
 - AutoML
 
-![alt](./pics/automl.png "")
+![alt](../pics/automl.png "")
 
 
 # Correlation
 
 - Python
 
-![alt](./pics/python_correlation.png "")
+![alt](../pics/python_correlation.png "")
 
 - Google AutoML
 
-![alt](./pics/automl_feature_importance.png "")
+![alt](../pics/automl_feature_importance.png "")
 We can find resemblances between 2 easily, nevertheless they have different algorightms
 
 - BigQuery
