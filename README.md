@@ -1,31 +1,11 @@
 # ml_with_bigquery_personal_notes
 
-This is a sketch of a private company research on what technology could be better to use. Don't panic! Currently in process.
+How to use BigQuery for ML and compare results with other tools. Currently in process.
 
+- Regression algorithms with BigQuery
+- Classification algorithms with BigQuery
+- Comparising metrics between BigQuery, Google AutoML and Python
 
-
-### Evaluating between Python Machine Learning, BigQuery Machine Learning and Google AutoML Machine Learning
-
-- Python
-
-![alt](./pics/python.png "")
-
-- BigQuery
-
-![alt](./pics/ml_bigquery.png "")
-
-![alt](./pics/automl.png "")
-
-
-- Esto está verde. Es un ejemplo
-
-- We need MORE metrics, ROC, AUC ect of ALL systems before being confident with them (RMSE it's just a measure of many), and draw all of them
-
-- We need a deeper cleaning of data before using it (I can clean all perfectly in Python and save it like a new dataset in BigQuery. In that way I'm sure Bigquery ML and AutoML will improve exponentially)
-
-- In the end everything must be imported to google data studio, to have beautiful pony dashboards
-
------------------------------------------------------
 
 # 1st things 1st. Basics.
 
@@ -58,3 +38,31 @@ This is a sketch of a private company research on what technology could be bette
 
 -------------------------------
 
+
+
+# Evaluating regression between Python Machine Learning, BigQuery Machine Learning and Google AutoML Machine Learning
+
+I'll update the process after anonymizing the studies. In the meantime, whith the same dataset, those are the results:
+
+- Python
+
+![alt](./pics/python.png "")
+
+Get the best metrics, in part because is the most carefully. In BigQuery the cleaning process can be quite a mess, and AutoML environment looks like an Excel. Maybe the key is to clean perfectly the dataset with Python and export to AutoML, once is clean.
+
+- BigQuery
+
+![alt](./pics/ml_bigquery.png "")
+
+- AutoML
+
+![alt](./pics/automl.png "")
+
+
+- We need MORE metrics, ROC, AUC ect of ALL systems before being confident with them (RMSE it's just a measure of many), and draw all of them
+
+- We need a deeper cleaning of data before using it (I can clean all perfectly in Python and save it like a new dataset in BigQuery. In that way I'm sure Bigquery ML and AutoML will improve exponentially)
+
+- In the end everything must be imported to google data studio, to have beautiful pony dashboards
+
+-----------------------------------------------------
