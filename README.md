@@ -1,10 +1,11 @@
 # ml_with_bigquery_personal_notes
 
-How to use BigQuery for ML and compare results with other tools. Currently in process.
+- How to use BigQuery for ML
+- Compare with the standard Python Machine Learning way, and the Google AutoML tool.
 
-- Regression algorithms with BigQuery
-- Classification algorithms with BigQuery
-- Comparising metrics between BigQuery, Google AutoML and Python
+    - Regression algorithms with BigQuery.
+    - Classification algorithms with BigQuery.
+    - Comparising metrics between BigQuery, Google AutoML and Python.
 
 
 # 1st things 1st. Basics.
@@ -75,4 +76,15 @@ Using the `bigquery-public-data.ml_datasets.census_adult_income`
 
 - BigQuery
 
-![alt](../pics/predictionclass.png " ")
+
+![alt](./pics/evaluate.png " ")
+
+- AutoML
+
+![alt](./pics/classification_metris.png " ")
+
+- Python
+
+![alt](./pics/classifiermetricspython1.png "")
+
+![alt](./pics/classifiermetricspython2.png "")
