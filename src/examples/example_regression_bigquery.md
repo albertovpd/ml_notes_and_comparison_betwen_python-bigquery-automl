@@ -1,17 +1,23 @@
 
 # Building a Regression model
 
+-------------------------
+
+### This is just an example of how applying Machine Learning with Google Bigquery.
 https://cloud.google.com/bigquery-ml/docs
+
+---------------------
+
 
 Let's remember what we can do
 
-![alt](./pics/tablecontent.png "")
+![alt](../pics/tablecontent.png "")
 
 ------------------------------
 
-let's use the london_bicycles dataset
+Let's use the london_bicycles dataset
 
-let's assume we have 2 types of bicycles: hardy commuter bikes and fast but fagile road bikes. if a bicycle rental is likely to be for a long duration, we need to have road bikes in stock, but if the rental is likely to be for a short duration, we need to have commuter bikes in stock. Therefore, to build a system to properly stock bicycles, we need to predict the duration of bicycle rentals.
+Let's assume we have 2 types of bicycles: hardy commuter bikes and fast but fragile road bikes. if a bicycle rental is likely to be for a long duration, we need to have road bikes in stock, but if the rental is likely to be for a short duration, we need to have commuter bikes in stock. Therefore, to build a system to properly stock bicycles, we need to predict the duration of bicycle rentals.
 
 - Choose the label
 
@@ -43,7 +49,7 @@ he start_station_name as the dimension and duration as metric (in google data st
 
 Run it and select EXPLORE DATA
 
-![alt](./pics/start_station.png "")
+![alt](../pics/start_station.png "")
 f_0 = duration (in seconds), ojo
 
 There are just a few stations that are associated with long-duration rentals (over 3k seconds), but that the majority of station have durations that lie in a relatively narrow range. Had all the stations in London been associated with durations within a narrow range, the station at which the rental commenced would not ahve been a good feature. But in this problem it is demonstrated the start_station_name does matter.
@@ -65,9 +71,9 @@ We perform similarly. you can check whether day of week (or hour) matters
         GROUP BY
         dayofweek
 
-![alt](./pics/daysofweekregression.png "")
+![alt](../pics/daysofweekregression.png "")
 
-![alt](./pics/regressionourofday.png "")
+![alt](../pics/regressionourofday.png "")
 
 - It looks like duration are longer on weekends than weekdays. Similarly, durations are longer early in them orning and in the midafternoon, so dayofweek and hourofday are good features
 
@@ -87,7 +93,7 @@ A potential feature is the number of bikes per station
         GROUP BY
         bikes_count
 
-![alt](./pics/regression_bikes.png "")
+![alt](../pics/regression_bikes.png "")
 We can see the relationship is noisy with no visible trend, so the number of bicycles is not a good feature.
 
 ----------------------------------------------------
@@ -163,7 +169,7 @@ To query whatever you're querying:
         corre = df.corr()
         sns.heatmap(corre)
 
-![alt](./pics/correlation_matrix.png "")
+![alt](../pics/correlation_matrix.png "")
 
 - Well, this result is dumb, but helpful when working with great amount of labels. Remember to erase columns with strong correlation as first approach (but try everything before deleting them)
 
@@ -222,7 +228,7 @@ If preparing the data involves computationally expensive transformations or join
 
         SELECT * FROM ML.EVALUATE(MODEL `isentropic-road-260315.vargas_data_studies.regression_london_bicycles`)
 
-![alt](./pics/terrible.png "")
+![alt](../pics/terrible.png "")
 Mean absolute error is in seconds. Check out the dimension of other metrics
 
 - Note that the query options also identifies the model type. Here, we have picked the simplest regression model that BigQuery supports. We strongly encourage you to pick the simplest model and to spend a lot of time considering and bringing in alternate data choices, because the payoff of a new/improved input feature greatly outweighs the payoff of a better model.
@@ -375,7 +381,7 @@ A linear regression model... It's fucking linear. Not cuadratic, not cubic. It's
         ML.WEIGHTS(MODEL `isentropic-road-260315.vargas_data_studies.regression_london_bicycles_bucketized_except`)
 
 
-![alt](./pics/weightseconds.png "")
+![alt](../pics/weightseconds.png "")
 
 This means that the contribution to this feature to the overal predicted duration is 3.07 seconds.
 
@@ -427,23 +433,4 @@ I really think this way is deprecated. Now you can use Tensorflow as model. Need
         start_date
         FROM
         `isentropic-road-260315.vargas_data_studies.london_bicycles_cycle_hire`
-
-
-
-![alt](./pics/.png "")
-![alt](./pics/.png "")
-![alt](./pics/.png "")
-![alt](./pics/.png "")
-![alt](./pics/.png "")
-![alt](./pics/.png "")
-![alt](./pics/.png "")
-![alt](./pics/.png "")
-![alt](./pics/.png "")
-![alt](./pics/.png "")
-![alt](./pics/.png "")
-![alt](./pics/.png "")
-![alt](./pics/.png "")
-![alt](./pics/.png "")
-![alt](./pics/.png "")
-![alt](./pics/.png "")
 

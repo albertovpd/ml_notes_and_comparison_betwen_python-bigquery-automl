@@ -91,7 +91,7 @@ You can create and train a logistic regression model using the CREATE MODEL stat
         WHERE
         dataframe = 'training'
 
-![alt](./pics/classification_metris.png "")
+![alt](../pics/classification_metris.png "")
 
 ### Query details
 
@@ -148,7 +148,7 @@ The query to evaluate the model is as follows:
 
 - we'll get the same stuff that we can see in the model created before
 
-![alt](./pics/evaluate.png " ")
+![alt](../pics/evaluate.png " ")
 
 - (Optional) To set the processing location, click More > Query settings. For Processing location, choose US. This step is optional because the processing location is automatically detected based on the dataset's location.
 
@@ -173,4 +173,4 @@ To identify the income bracket to which a particular respondent belongs, use the
 
 The ML.PREDICT function predicts results using your model and the data from input_view, filtered to include only rows in the 'prediction' dataframe. The top-most SELECT statement retrieves the output of the ML.PREDICT function.
 
-![alt](./pics/predictionclass.png " ")
+![alt](../pics/predictionclass.png " ")
