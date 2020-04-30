@@ -1,8 +1,5 @@
 ## Personal research about pros and cons of ML with Python, with BigQuery and Google AutoML for markech purposes.
 
-The 1st version with metrics is in /past_exercises/README.md
-
-Now is everything en barbecho, I'm trying a new approach for martech purposes 
 
 ------------------
 ---------------------
@@ -15,7 +12,7 @@ There are 2 cases to compare: Regression and classification algorithms.
 --------------------------
 
 
-**Python**: I got the best metrics with it, not unusual because the dataset cleaning can be extremely well done and there are almost an infinite number of available algorithms to play with. 
+**Python**: My favorite, with really good results, not unusual because the dataset cleaning can be extremely well done and there are almost an infinite number of available algorithms and techniques to play with. 
 
 - The cost is 0€.
 - It can take many hours to build a great model.
@@ -31,9 +28,13 @@ There are 2 cases to compare: Regression and classification algorithms.
 - The cost is quite high (~20€/job).
 - It take almost 0hours to build it and lot of time computing the solution.
 - It can be very easily implemented and programmed to run periodically in the GCS environment.
-- Thanks to the interactive results, in classification problems you can modify the parameters to fit better your purposes.
 
-A very interesting point is that 3 tools can be combined to enhance results.
+
+- With Python, once you have your selected model, you can perform a tunning of hyperparameters to sharp even more your algorithm.
+
+- With BigQuery and AutoML, the tunning of hyperparameters is already implemented on the solution. The final result show the metrics, with an interactive button. You can slide the button to enhance the better metrics for your project. 
+
+A very interesting point is that the 3 tools can be combined.
 
 
 ----------------------
@@ -60,8 +61,7 @@ After testing many algorithms and hyperparameters, this is the best one:
 
 BigQuery does not offer such a variety of algorithms to work with.
 
-        After a 1st trial, this are the results. It is compulsory a better "cleaning" (selecting in SQL) to improve the metrics. I certainly did not perform all steps that I did with Python.
-        Checking on the internet, it looks like BigQuery ML is not the best anyway, nevertheless there is an interesting margin of improvement here.
+        In python you can process a dataframe in many ways, regarding columns or rows, get easy displays of all columns to check their structure... This is not so easy with SQL.
 
 ![alt](./pics/ml_bigquery.png "")
 
@@ -69,10 +69,8 @@ BigQuery does not offer such a variety of algorithms to work with.
 
 - **AutoML**
 
-Once the model is done there is available a tuning of hyperparameters that can we not forget.
+Selet columns and run.
         
-        Again, there is a margin of improvement that must be researched.
-
 ![alt](./pics/automl.png "")
 
 
@@ -101,7 +99,7 @@ From all done algorithms (11), this is the selected one:
 
 - BigQuery
 
-        Metrics worse than with Python, but still acceptable. AUC is quite good.
+        Metrics worse than with Python, but still acceptable. 
 ![alt](./pics/evaluate.png " ")
 
 - AutoML
