@@ -2,11 +2,11 @@
 
 --------------
 
-**- Precision** = positive predictive value
+**- Precision** = positive predictive value = TP / (TP+FP)
 
 Fraction of relevant instances among retrieved instances
 
-**- Recall** = sensitivity
+**- Recall** = sensitivity = TP/ (TP + FN)
 
 Fraction of the total amount of relevant instances that were actually retrieved
 
@@ -19,6 +19,16 @@ From all dogs identified, just 5 were actually dogs
 
 Recall= 5/12
 From all the dogs, just 5 were identified
+
+![alt](./pics/precission_recall.png " ")
+*Internet picture.*
+
+In the picture we see: 
+- 1 TP
+- 2 FP
+- 7 TN
+- 0 FN
+
 
 **- Classification accuracy**.
 
