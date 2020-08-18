@@ -1,4 +1,8 @@
+- I am on the process of modifying this repo. At the moment, this is the ketch:
+
+
 ## Personal research about pros and cons of ML with Python, with BigQuery and Google AutoML for markech purposes.
+
 
 
 ------------------
